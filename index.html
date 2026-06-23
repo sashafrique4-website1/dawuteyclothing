@@ -163,14 +163,13 @@
 
     /* ── Hero (Home) ── */
     #hero-wrap {
+      position: relative;
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: 100vh;
     }
-    @media (max-width: 768px) {
-      #hero-wrap { grid-template-columns: 1fr; }
-      .hero-img-col { display: none; }
-    }
+
+    /* Desktop: side by side */
     .hero-img-col {
       position: relative;
       overflow: hidden;
@@ -183,12 +182,46 @@
     .hero-text-col {
       display: flex; flex-direction: column; justify-content: center;
       padding: 9rem 5rem 5rem 5rem;
+      position: relative;
+      z-index: 2;
     }
-    @media (max-width: 1024px) { .hero-text-col { padding: 9rem 2.5rem 4rem 2.5rem; } }
-    @media (max-width: 768px) {
+
+    /* Tablet: image becomes full background, text overlays */
+    @media (max-width: 1024px) {
+      #hero-wrap { grid-template-columns: 1fr; }
+      .hero-img-col {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-img-col::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(250,247,242,0.78);
+        z-index: 1;
+      }
+      .hero-img-col img {
+        filter: none;
+      }
+      .hero-text-col {
+        padding: 9rem 3rem 5rem 3rem;
+        min-height: 100vh;
+        background: transparent;
+      }
+      /* founder name tag — hide on mobile/tablet since image is bg */
+      .hero-img-col .founder-tag { display: none; }
+    }
+
+    /* Mobile: same but tighter padding, centered */
+    @media (max-width: 640px) {
       .hero-text-col {
         padding: 9rem 1.5rem 4rem 1.5rem;
-        align-items: center; text-align: center; min-height: 100vh;
+        align-items: center;
+        text-align: center;
+      }
+      .hero-img-col::after {
+        background: rgba(250,247,242,0.82);
       }
     }
 
@@ -334,17 +367,17 @@
         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=900&q=90';"
       />
       <div style="position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(28,28,28,0.5),transparent);pointer-events:none;"></div>
-      <div style="position:absolute;bottom:2.5rem;left:2.5rem;">
+      <div class="founder-tag" style="position:absolute;bottom:2.5rem;left:2.5rem;z-index:2;">
         <p class="eyebrow" style="color:rgba(250,247,242,0.65);">The Founder</p>
         <p class="display text-2xl" style="color:#FAF7F2;">Dawutey Clothing</p>
       </div>
     </div>
 
     <!-- Brand text -->
-    <div class="hero-text-col bg-cream">
+    <div class="hero-text-col" style="background:#FAF7F2;">
       <p class="eyebrow mb-7 reveal">Accra, Ghana &nbsp;&bull;&nbsp; Est. 2020</p>
-      <h1 class="display text-6xl lg:text-7xl xl:text-8xl text-charcoal reveal reveal-d1">Wear Your<br/>Own</h1>
-      <h1 class="display-it text-6xl lg:text-7xl xl:text-8xl text-gold mb-8 reveal reveal-d2">Power.</h1>
+      <h1 class="display text-4xl sm:text-5xl lg:text-7xl xl:text-8xl text-charcoal reveal reveal-d1">Wear Your<br/>Own</h1>
+      <h1 class="display-it text-4xl sm:text-5xl lg:text-7xl xl:text-8xl text-gold mb-8 reveal reveal-d2">Power.</h1>
       <div class="rule-left max-w-16 mb-8 reveal reveal-d2"></div>
       <p class="font-sans font-light text-mist text-sm leading-loose max-w-sm mb-12 reveal reveal-d3">
         Elite flare dresses for corporate and everyday women. Crafted from the world's finest fabrics. Every stitch designed to make you walk into any room unforgettable.
@@ -383,11 +416,11 @@
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
         <div class="reveal">
           <p class="eyebrow mb-4">Latest Pieces</p>
-          <h2 class="display text-5xl lg:text-6xl text-charcoal">The Global<br/><span class="display-it text-gold">Flare Collection</span></h2>
+          <h2 class="display text-3xl sm:text-4xl lg:text-6xl text-charcoal">The Global<br/><span class="display-it text-gold">Flare Collection</span></h2>
         </div>
         <button class="btn-gold self-start sm:self-auto reveal reveal-d1" onclick="showPage('collection')">View Full Collection</button>
       </div>
-      <div id="home-dress-preview" class="grid grid-cols-2 lg:grid-cols-4 gap-5"></div>
+      <div id="home-dress-preview" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
     </div>
   </section>
 
@@ -400,9 +433,9 @@
       
     />
     <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(28,28,28,0.82) 0%,rgba(28,28,28,0.35) 60%,transparent 100%);"></div>
-    <div class="relative z-10 flex flex-col justify-end px-10 lg:px-20 py-20 lg:py-32" style="min-height:75vh;">
+    <div class="relative z-10 flex flex-col justify-end px-6 sm:px-10 lg:px-20 py-16 lg:py-32" style="min-height:75vh;">
       <p class="eyebrow text-gold mb-4 reveal">The Signature Look</p>
-      <h2 class="display text-5xl lg:text-7xl text-cream mb-6 reveal reveal-d1">
+      <h2 class="display text-3xl sm:text-4xl lg:text-7xl text-cream mb-6 reveal reveal-d1">
         Structured at the Waist.<br/><span class="display-it text-gold">Free at the Hem.</span>
       </h2>
       <p class="font-sans font-light text-cream/65 text-sm max-w-md leading-loose mb-10 reveal reveal-d2">
@@ -415,10 +448,10 @@
   </section>
 
   <!-- Home CTA -->
-  <section class="py-24 lg:py-28 text-center bg-cream px-6">
+  <section class="py-16 lg:py-28 text-center bg-cream px-6">
     <div class="max-w-2xl mx-auto">
       <p class="eyebrow mb-5 reveal">Ready?</p>
-      <h2 class="display text-5xl lg:text-7xl text-charcoal mb-6 reveal reveal-d1">Your next dress<br/><span class="display-it text-gold">is waiting.</span></h2>
+      <h2 class="display text-4xl sm:text-5xl lg:text-7xl text-charcoal mb-6 reveal reveal-d1">Your next dress<br/><span class="display-it text-gold">is waiting.</span></h2>
       <p class="font-sans font-light text-mist text-sm leading-loose mb-12 reveal reveal-d2">Whether you want a piece from the collection or a fully bespoke creation, we are here.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-d3">
         <button class="btn-dark" onclick="showPage('collection')">Shop the Collection</button>
@@ -434,12 +467,12 @@
      PAGE: COLLECTION
 ════════════════════════════════════════ -->
 <div id="page-collection" class="page">
-  <section class="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-cream px-6 lg:px-14">
+  <section class="pt-24 pb-16 lg:pt-44 lg:pb-32 bg-cream px-6 lg:px-14">
     <div class="max-w-7xl mx-auto">
 
-      <div class="mb-16">
+      <div class="mb-12 lg:mb-16">
         <p class="eyebrow mb-5 reveal">Ready to Wear</p>
-        <h1 class="display text-6xl lg:text-8xl text-charcoal reveal reveal-d1">The Global<br/><span class="display-it text-gold">Flare Collection</span></h1>
+        <h1 class="display text-4xl sm:text-5xl lg:text-8xl text-charcoal reveal reveal-d1">The Global<br/><span class="display-it text-gold">Flare Collection</span></h1>
         <div class="rule-left max-w-16 mt-8 reveal reveal-d2"></div>
       </div>
 
@@ -461,12 +494,12 @@
      PAGE: BESPOKE
 ════════════════════════════════════════ -->
 <div id="page-bespoke" class="page">
-  <section class="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-cream px-6 lg:px-14">
+  <section class="pt-24 pb-16 lg:pt-44 lg:pb-32 bg-cream px-6 lg:px-14">
     <div class="max-w-7xl mx-auto">
 
-      <div class="mb-16">
+      <div class="mb-12 lg:mb-16">
         <p class="eyebrow mb-5 reveal">Bespoke &amp; Custom</p>
-        <h1 class="display text-6xl lg:text-8xl text-charcoal reveal reveal-d1">Your Dress.<br/><span class="display-it text-gold">Your Vision.</span></h1>
+        <h1 class="display text-4xl sm:text-5xl lg:text-8xl text-charcoal reveal reveal-d1">Your Dress.<br/><span class="display-it text-gold">Your Vision.</span></h1>
         <div class="rule-left max-w-16 mt-8 reveal reveal-d2"></div>
       </div>
 
@@ -505,7 +538,7 @@
         </div>
 
         <!-- Form -->
-        <div class="bg-parchment p-8 lg:p-12 reveal reveal-d1">
+        <div class="bg-parchment p-6 lg:p-12 reveal reveal-d1">
           <p class="eyebrow mb-5">Start Your Journey</p>
           <h2 class="display text-3xl text-charcoal mb-1">Request a Custom<br/><span class="display-it text-gold">Design Consultation</span></h2>
           <div class="rule-center my-6"></div>
@@ -540,18 +573,18 @@
      PAGE: SERVICES
 ════════════════════════════════════════ -->
 <div id="page-services" class="page">
-  <section class="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-charcoal px-6 lg:px-14" style="min-height:100vh;">
+  <section class="pt-24 pb-16 lg:pt-44 lg:pb-32 bg-charcoal px-6 lg:px-14" style="min-height:100vh;">
     <div class="max-w-7xl mx-auto">
 
       <div class="mb-16">
         <p class="eyebrow text-gold mb-5 reveal">Services &amp; Consultations</p>
-        <h1 class="display text-6xl lg:text-8xl text-cream reveal reveal-d1">Styled for Every<br/><span class="display-it text-gold">Chapter of Your Life</span></h1>
+        <h1 class="display text-4xl sm:text-5xl lg:text-8xl text-cream reveal reveal-d1">Styled for Every<br/><span class="display-it text-gold">Chapter of Your Life</span></h1>
         <div class="rule-left max-w-16 mt-8 reveal reveal-d2" style="background:linear-gradient(to right,#B8974A,transparent);"></div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
 
-        <div class="border border-gold/20 bg-cream/5 p-10 lg:p-14 hover:bg-cream/10 transition-colors duration-500 reveal">
+        <div class="border border-gold/20 bg-cream/5 p-7 lg:p-14 hover:bg-cream/10 transition-colors duration-500 reveal">
           <div class="w-10 h-10 border border-gold/40 flex items-center justify-center mb-8">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8974A" stroke-width="1.2">
               <rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
@@ -563,7 +596,7 @@
           <button onclick="openModal()" class="btn-gold">Schedule Consultation</button>
         </div>
 
-        <div class="border border-gold/20 bg-gold/5 p-10 lg:p-14 hover:bg-gold/10 transition-colors duration-500 reveal reveal-d1">
+        <div class="border border-gold/20 bg-gold/5 p-7 lg:p-14 hover:bg-gold/10 transition-colors duration-500 reveal reveal-d1">
           <div class="w-10 h-10 border border-gold/40 flex items-center justify-center mb-8">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8974A" stroke-width="1.2">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -577,7 +610,7 @@
       </div>
 
       <!-- Reach us strip -->
-      <div class="border border-gold/20 p-8 lg:p-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 reveal">
+      <div class="border border-gold/20 p-6 lg:p-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 reveal">
         <div>
           <p class="eyebrow text-gold mb-3">Get in Touch Directly</p>
           <div class="flex flex-col sm:flex-row gap-6">
@@ -602,11 +635,11 @@
      PAGE: INSIGHTS
 ════════════════════════════════════════ -->
 <div id="page-insights" class="page">
-  <section class="pt-36 pb-24 lg:pt-44 lg:pb-32 bg-parchment px-6 lg:px-14" style="min-height:100vh;">
+  <section class="pt-24 pb-16 lg:pt-44 lg:pb-32 bg-parchment px-6 lg:px-14" style="min-height:100vh;">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16">
         <p class="eyebrow mb-5 reveal">Styling Insights &amp; Journal</p>
-        <h1 class="display text-6xl lg:text-8xl text-charcoal reveal reveal-d1">The Dawutey<br/><span class="display-it text-gold">Atelier Journal</span></h1>
+        <h1 class="display text-4xl sm:text-5xl lg:text-8xl text-charcoal reveal reveal-d1">The Dawutey<br/><span class="display-it text-gold">Atelier Journal</span></h1>
         <div class="rule-left max-w-16 mt-8 reveal reveal-d2"></div>
       </div>
       <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
@@ -621,11 +654,11 @@
 <div id="page-about" class="page">
 
   <!-- Page hero -->
-  <section class="pt-40 pb-20 bg-cream px-6 lg:px-14">
+  <section class="pt-28 pb-12 lg:pt-40 lg:pb-20 bg-cream px-6 lg:px-14">
     <div class="max-w-7xl mx-auto">
       <p class="eyebrow mb-6 reveal">Our Story</p>
-      <h1 class="display text-6xl lg:text-8xl text-charcoal mb-0 reveal reveal-d1">Born from a Desire<br/>to See Women</h1>
-      <h1 class="display-it text-6xl lg:text-8xl text-gold mb-10 reveal reveal-d2">Radiate Their Worth.</h1>
+      <h1 class="display text-4xl sm:text-5xl lg:text-8xl text-charcoal mb-0 reveal reveal-d1">Born from a Desire<br/>to See Women</h1>
+      <h1 class="display-it text-4xl sm:text-5xl lg:text-8xl text-gold mb-10 reveal reveal-d2">Radiate Their Worth.</h1>
       <div class="rule-left max-w-24 reveal"></div>
     </div>
   </section>
@@ -656,7 +689,7 @@
       <!-- Bio -->
       <div class="reveal reveal-d1">
         <p class="eyebrow mb-6">The Founder's Journey</p>
-        <h2 class="display text-4xl lg:text-5xl text-charcoal mb-8 leading-tight">She Does Not Just<br/>Design Dresses.<br/><span class="display-it text-gold">She Builds Confidence.</span></h2>
+        <h2 class="display text-3xl sm:text-4xl lg:text-5xl text-charcoal mb-8 leading-tight">She Does Not Just<br/>Design Dresses.<br/><span class="display-it text-gold">She Builds Confidence.</span></h2>
         <div class="rule-left max-w-12 mb-8"></div>
         <div class="space-y-5 font-sans font-light text-mist text-sm leading-loose">
           <p>The journey of Dawutey Clothing began with a simple but powerful desire. As a young girl growing up in Ghana, our founder always looked at the women around her and saw natural royalty. Right after she completed her Senior High School education, where she studied Visual Arts, she realized her true calling. She did not just want to look at art. She wanted to create art that women could wear.</p>
@@ -674,13 +707,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
         <div class="reveal">
           <p class="eyebrow mb-6">Our Vision</p>
-          <blockquote class="display-it text-3xl lg:text-4xl text-charcoal leading-snug">
+          <blockquote class="display-it text-2xl sm:text-3xl lg:text-4xl text-charcoal leading-snug">
             "A world where every woman regardless of race, color, or background steps into any room wearing an unshakeable armor of self worth, completely proud of who she is, and radiantly confident in her own skin."
           </blockquote>
         </div>
         <div class="reveal reveal-d1">
           <p class="eyebrow mb-6">Our Mission</p>
-          <p class="display text-3xl lg:text-4xl text-charcoal leading-snug mb-6">To craft timeless, elite garments through masterful corsetry, inclusive silhouettes, and bespoke experiences that physically manifest a woman's inner power and grace.</p>
+          <p class="display text-2xl sm:text-3xl lg:text-4xl text-charcoal leading-snug mb-6">To craft timeless, elite garments through masterful corsetry, inclusive silhouettes, and bespoke experiences that physically manifest a woman's inner power and grace.</p>
           <div class="rule-left max-w-12"></div>
         </div>
       </div>
@@ -718,7 +751,7 @@
   <section class="py-20 bg-charcoal px-6 lg:px-14">
     <div class="max-w-4xl mx-auto">
       <p class="eyebrow text-gold mb-6 reveal">Elite Training</p>
-      <h2 class="display text-5xl text-cream mb-16 reveal reveal-d1">The Education Behind<br/><span class="display-it text-gold">Every Stitch</span></h2>
+      <h2 class="display text-3xl sm:text-4xl lg:text-5xl text-cream mb-16 reveal reveal-d1">The Education Behind<br/><span class="display-it text-gold">Every Stitch</span></h2>
       <div class="space-y-0">
         <div class="flex gap-8 reveal" style="padding-bottom:3rem;">
           <div class="flex flex-col items-center">
@@ -768,10 +801,10 @@
   </section>
 
   <!-- About CTA -->
-  <section class="py-24 text-center bg-cream px-6">
+  <section class="py-16 lg:py-24 text-center bg-cream px-6">
     <div class="max-w-xl mx-auto">
       <p class="eyebrow mb-5 reveal">Now It Is Your Turn</p>
-      <h2 class="display text-5xl lg:text-6xl text-charcoal mb-8 reveal reveal-d1">Step Into a Dress That<br/><span class="display-it text-gold">Knows Your Worth.</span></h2>
+      <h2 class="display text-3xl sm:text-4xl lg:text-6xl text-charcoal mb-8 reveal reveal-d1">Step Into a Dress That<br/><span class="display-it text-gold">Knows Your Worth.</span></h2>
       <button class="btn-dark reveal reveal-d2" onclick="showPage('collection')">View the Collection</button>
     </div>
   </section>
